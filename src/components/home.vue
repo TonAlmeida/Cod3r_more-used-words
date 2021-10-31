@@ -9,7 +9,7 @@
                 multiple
                 chips
                 v-model='files'
-                @click:append-outer='processSubtitles'
+                @click:append-outer="processSubtitles"
             />
       </v-form>
       <div class='pills'>
@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
-import Pill from '../pill.vue'
+const {ipcRenderer} = window.require("electron")
+import Pill from './pill.vue'
 
 export default {
     components: {
@@ -34,21 +34,15 @@ export default {
     data() {
         return {
             files: [],
-            grupedWords: [
-                { name: 'i', amount: 1234 },
-                { name: 'you', amount: 900 },
-                { name: 'he', amount: 834 },
-                { name: 'she', amount: 400 },
-            ]
+            grupedWords: []
         }
     },
     methods: {
         processSubtitles() {
-            console.log(this.files)
 
-            ipcRenderer.send('blabla', 'ping')//the first argument is a channel
-            ipcRenderer.on('blublu', (event, res) => {
-                console.log(res)
+            ipcRenderer.send('process-subtitles', 'ping')
+            ipcRenderer.on('process-subtitles', (event, resp) => {
+                this.grupedWords = resp
             })
         }
     }

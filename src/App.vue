@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark> </v-app-bar>
-      <v-toolbar-title>rr  ee rr rrr</v-toolbar-title>
+    <v-app-bar app color="primary" dark> {{ title }} </v-app-bar>
+      <v-toolbar-title></v-toolbar-title>
     <v-main>
       <Home></Home>
     </v-main>
@@ -19,7 +19,7 @@ export default {
   },
 
   data: () => ({
-    //
+     title: 'most-used-words'
   }),
 };
 </script>
