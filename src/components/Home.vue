@@ -1,5 +1,5 @@
 <template>
-  <v-main fluid>
+  <v-container fluid>
       <v-form>
             <v-file-input
                 label="selecione as legendas"
@@ -14,35 +14,37 @@
       </v-form>
       <div class='pills'>
           <Pill
-            v-for="word in grupedWords"
+            v-for="word in grupWords"
             :key="word.name"
-            :name='word.name'
+            :name="word.name"
             :amount="word.amount"
           ></Pill>
       </div>
-  </v-main>
+  </v-container>
 </template>
 
 <script>
+import grupWords from '../back-end/grupWords'
 const {ipcRenderer} = window.require("electron")
-import Pill from './pill.vue'
+import Pill from './Pill'
 
 export default {
     components: {
         Pill
     },
-    data() {
+    data: function() {
         return {
             files: [],
-            grupedWords: []
+            grupWords: []
         }
     },
     methods: {
         processSubtitles() {
-
-            ipcRenderer.send('process-subtitles', 'ping')
+            const paths = this.files.map(f => f.path)
+            ipcRenderer.send('process-subtitles', paths)
             ipcRenderer.on('process-subtitles', (event, resp) => {
-                this.grupedWords = resp
+                this.grupWords = resp
+                console.log(grupWords)
             })
         }
     }
