@@ -44,7 +44,6 @@ export default {
             ipcRenderer.send('process-subtitles', paths)
             ipcRenderer.on('process-subtitles', (event, resp) => {
                 this.grupWords = resp
-                console.log(grupWords)
             })
         }
     }
